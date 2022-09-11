@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { fetchPrefectures } from "./resas_gateway";
+import { Checkbox } from "./components/checkbox";
+import { Prefecture } from "./types/prefecture";
+import { ApiResponce } from "./types/api_responce";
+
+type props = {
+    prefCode: number;
+    prefName: string;
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const prefectures: Prefecture[] = fetchPrefectures().result;
+
+    return (
+        <div className="App">
+            {prefectures.map((prefecture) => (
+                <Checkbox
+                    prefCode={prefecture.prefCode}
+                    prefName={prefecture.prefName}
+                    key={prefecture.prefCode}
+                />
+            ))}
+        </div>
+    );
 }
 
 export default App;

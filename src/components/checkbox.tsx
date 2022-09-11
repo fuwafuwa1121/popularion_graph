@@ -1,13 +1,11 @@
-import type { Prefectures } from "../types/prefectures";
+import { fetchPrefectures } from "../resas_gateway";
+import type { Prefecture } from "../types/prefecture";
 
-export const CheckBox = (props: Prefectures) => {
-    const prefCode = props.result.prefCode;
-    const prefName = props.result.prefName;
-
+export const Checkbox = (props: Prefecture) => {
     return (
-        <div key={prefCode}>
-            <input type="checkbox" />
-            {prefName}
+        <div key={props.prefCode}>
+            <input type="checkbox" id="{props.prefCode}" />
+            <label htmlFor="{props.prefCode}">{props.prefName}</label>
         </div>
     );
 };

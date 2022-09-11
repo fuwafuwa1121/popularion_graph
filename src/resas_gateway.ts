@@ -1,16 +1,30 @@
-import { Component } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import apiKey from "./api_key";
-import type {Prefectures} from "./types/prefectures"
+import type { ApiResponce } from "./types/api_responce";
 
-const [prefectures, setPrefectures] = useState<Prefectures[]>([]);
+// 都道府県一覧を取得
+export const fetchPrefectures = () => {
+    const [prefectures, setPrefectures] = useState<ApiResponce>({
+        message: null,
+        result: [],
+    });
+    const config = {
+        headers: {
+            "X-API-KEY": apiKey(),
+        },
+    };
 
-const fetchPrefectures = () => {
-    fetch("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
-        headers: { "X-API-KEY": apiKey() },
-    })
-        .then((responce) => responce.json())
-        .then((res) => {
-            setPrefectures(res.result);
-        });
+    useEffect(() => {
+        axios
+            .get<ApiResponce>(
+                "https://opendata.resas-portal.go.jp/api/v1/prefectures",
+                config
+            )
+            .then((responce) => {
+                setPrefectures(responce.data);
+            });
+    }, []);
+
+    return prefectures;
 };
