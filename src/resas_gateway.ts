@@ -1,11 +1,7 @@
 import { Component } from "react";
 import { useState } from "react";
 import apiKey from "./api_key";
-
-type Prefectures = {
-    message: null;
-    result: { prefCode: number; prefName: string };
-};
+import type {Prefectures} from "./types/prefectures"
 
 const [prefectures, setPrefectures] = useState<Prefectures[]>([]);
 
